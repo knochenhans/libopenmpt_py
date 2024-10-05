@@ -15,9 +15,13 @@ from ctypes import (
     Structure,
     POINTER,
 )
+from ctypes.util import find_library
 
+libopenmpt_path = find_library("openmpt")
+if not libopenmpt_path:
+    raise OSError("libopenmpt library not found")
+LIBOPENMPT = ctypes.cdll.LoadLibrary(libopenmpt_path)
 
-LIBOPENMPT = ctypes.cdll.LoadLibrary("libopenmpt_binaries/bin/x86/libopenmpt.dll")
 LIBOPENMPT_STREAM_CALLBACKS_BUFFER = None
 LIBOPENMPT_STREAM_CALLBACKS_FD = None
 LIBOPENMPT_STREAM_CALLBACKS_FILE = None
